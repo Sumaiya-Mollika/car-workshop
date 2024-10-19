@@ -52,11 +52,13 @@ const kErrorColor = Color(0xFFD51F26);
 const kSuccessfulColor = Color(0xFF008216);
 const lightPrimaryColor = Color(0xFF8F94FB);
 const primaryColor = Color(0xFF7077F4);
+const kDisabledButtonColor = Color(0xFFCCCEF4);
+//const primaryColor = Color(0xFF7077F4);
 
 const gradientRedColor1 = Color(0xFFD51f26);
 const gradientRedColor2 = Color(0xFFF55e36);
 const kWhiteColor = Color(0xFFFFFFFF);
-const kDisabledButtonColor = Color(0xFF808D9E);
+//const kDisabledButtonColor = Color(0xFF808D9E);
 const kDisabledColor = Color(0xFFbedcf9);
 
 //const kDisabledColor = Color.fromARGB(255, 245, 160, 160);

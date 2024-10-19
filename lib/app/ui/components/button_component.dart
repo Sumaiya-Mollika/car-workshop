@@ -52,7 +52,7 @@ class ButtonComponent extends StatelessWidget {
     ),
     this.stylePadding = const EdgeInsets.symmetric(
       horizontal: 0,
-      vertical: 11.5,
+      vertical: 14,
     ),
   });
 
@@ -79,28 +79,17 @@ class ButtonComponent extends StatelessWidget {
                 : const LinearGradient(
                     begin: Alignment.centerRight,
                     end: Alignment.centerLeft,
-                    colors: [kDisabledColor, kDisabledColor],
+                    colors: [kDisabledButtonColor, kDisabledButtonColor],
                   ),
           ),
           width: width,
           child: ElevatedButton(
-            child: Padding(
-              padding: const EdgeInsets.only(
-                left: 5,
-                right: 5,
-              ),
-              child: Text(
-                text ?? "",
-                textAlign: TextAlign.center,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-            onPressed: onPressed,
+       
+            onPressed:cancelButton == false? onPressed:null,
             onLongPress: onLongPressed,
             style: ElevatedButton.styleFrom(
-              foregroundColor: textColor,
-              backgroundColor: Colors.transparent,
+           foregroundColor: textColor,
+            backgroundColor: Colors.transparent,
               shadowColor: Colors.transparent,
               minimumSize: minimumSize,
               shape: RoundedRectangleBorder(
@@ -112,6 +101,18 @@ class ButtonComponent extends StatelessWidget {
                 fontWeight: fontWeight,
                 color: textColor,
                 fontSize: fontSize,
+              ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.only(
+                left: 5,
+                right: 5,
+              ),
+              child: Text(
+                text ?? "",
+                textAlign: TextAlign.center,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
               ),
             ),
           ),

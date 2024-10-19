@@ -1,5 +1,6 @@
-import 'dart:developer';
 
+
+import 'package:car_care/app/ui/screens/home_screen.dart';
 import 'package:car_care/app/ui/screens/sign_in_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -12,30 +13,32 @@ class AuthController extends GetxController {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-    final TextEditingController emailController = TextEditingController();
-    final TextEditingController passwordController = TextEditingController();
-    final TextEditingController confrimpPasswordController = TextEditingController();
+ var emailController = TextEditingController().obs;
+  var passwordController = TextEditingController().obs;
+  var confrimpPasswordController = TextEditingController().obs;
+
+
 late Rx<User?> _user;
-  final userRole =RxString(""); 
-  final isObscure =RxBool(false);
+  final selectedRole =RxString("mechanic"); 
+  final isDisable =RxBool(false);
   @override
   void onInit() {
     super.onInit();
-   // _user.bindStream(_auth.authStateChanges());
+ _user.bindStream(_auth.authStateChanges());
   }
-  // @override
-  // void onReady() {
-  //   super.onReady();
-  //   _user = Rx<User?>(_auth.currentUser);
-  //   _user.bindStream(_auth.userChanges());
-  //   ever(_user, _initaialPage);
-  // }
+  @override
+  void onReady() {
+    super.onReady();
+    _user = Rx<User?>(_auth.currentUser);
+    _user.bindStream(_auth.userChanges());
+    ever(_user, _initaialPage);
+  }
 
   _initaialPage(User? user) {
     if (user == null) {
       Get.offAll(()=> SignInScreen());
     } else {
-     // Get.offAll(HomeScreen());
+  Get.offAll(const HomeScreen());
     }
   }
 
@@ -50,48 +53,53 @@ late Rx<User?> _user;
   
       await _firestore.collection('users-with-role').doc(userCredential.user!.uid).set({
         'email': emailController.value.text,
-        // 'role': userRole.value,
-        'role': 'admin',
+    
+        'role': selectedRole.value,
       });
-dismissLoading();
-      Get.snackbar("Success", "Account created successfully");
+showMessage("Account created successfully");
+clearValues();
+   Get.offAll(()=> SignInScreen());
    
     } catch (e) {
-      log(e.toString());
-      dismissLoading();
-      Get.snackbar("Error", e.toString());
+    showMessage(e.toString(),isError: true);
+   
     }
   }
 
-  // Login
-  // Future<void> signIn(String email, String password) async {
-  //   try {
-  //     await _auth.signInWithEmailAndPassword(email: email, password: password);
-  //     customSnackbar(title: 'Sign In Successful', message: '', color: Colors.green);
-  //     // Navigate to home or dashboard
-  //   } catch (e) {
-  //     _handleAuthError(e);
-  //   }
-  // }
 
-  // Error handling
-  // void _handleAuthError(dynamic error) {
-  //   String errorMessage = extractErrorMessage(error.toString());
-  //   customSnackbar(title: 'Authentication Failed', message: errorMessage, color: Colors.red);
-  // }
+  Future<void> signIn() async {
+    displayLoading();
+    try {
+      await _auth.signInWithEmailAndPassword(email: emailController.value.text, password: passwordController.value.text);
+     showMessage("Sign In Successful");
+ 
+      
+    } catch (e) {
+           showMessage(e.toString(),isError: true);
+    
+    
+    }
+  }
+
+
 
   Future<void> logout() async {
     await _auth.signOut();
     Get.snackbar("Success", "Logged out successfully");
   }
 
-   bool disableButton(){
-if(emailController.value.text.isEmail&&passwordController.value.text.isNotEmpty&&confrimpPasswordController.value.text.isNotEmpty){
-  return false;
-}else{
- return true;
+
+clearValues(){
+  emailController.value.clear();
+  passwordController.value.clear();
+  confrimpPasswordController.value.clear();
 }
-  }
+bool disableButton() {
+  return !(emailController.value.text.isEmail &&
+      passwordController.value.text.isNotEmpty &&
+      confrimpPasswordController.value.text.isNotEmpty &&
+      selectedRole.value.isNotEmpty);
+}
 }
 
 
