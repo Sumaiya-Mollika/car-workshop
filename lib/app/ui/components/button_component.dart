@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 
-
-
 class ButtonComponent extends StatelessWidget {
   final String? text;
   final String font;
@@ -13,8 +11,6 @@ class ButtonComponent extends StatelessWidget {
   final double? fontSize;
   final EdgeInsets padding;
   final EdgeInsets stylePadding;
-
-
 
   final Size? minimumSize;
   final Color? buttonColor1;
@@ -33,17 +29,13 @@ class ButtonComponent extends StatelessWidget {
     super.key,
     this.text,
     this.borderSide,
- 
-
     this.elevation = 0.8,
     this.font = primaryFont,
     this.borderRadius = kFontRadius,
-
     required this.onPressed,
     this.onLongPressed,
     this.prefixIconWidth = 30,
     this.minimumSize = Size.zero,
- 
     this.width = double.infinity,
     this.textColor = Colors.white,
     this.buttonColor1 = lightPrimaryColor,
@@ -79,7 +71,7 @@ class ButtonComponent extends StatelessWidget {
             //   ),
             // ],
             gradient: cancelButton == false
-                ?  LinearGradient(
+                ? LinearGradient(
                     begin: Alignment.centerRight,
                     end: Alignment.centerLeft,
                     colors: [buttonColor1!, buttonColor2!],
@@ -92,42 +84,37 @@ class ButtonComponent extends StatelessWidget {
           ),
           width: width,
           child: ElevatedButton(
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                      left: 5,
-                      right: 5,
-                    ),
-                    child: Text(
-                   
-                   text ?? "",
-                      textAlign: TextAlign.center,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      
-                    ),
-                  ),
-                  onPressed: onPressed,
-                  onLongPress: onLongPressed,
-                  style: ElevatedButton.styleFrom(
-                    foregroundColor: textColor,
-                    backgroundColor: Colors.transparent,
-                   
-                    shadowColor: Colors.transparent,
-                    minimumSize: minimumSize,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(borderRadius),
-                    ),
-                    padding: stylePadding,
-                    textStyle: GoogleFonts.getFont(
-                      font,
-                      fontWeight: fontWeight,
-                      color: textColor,
-                      fontSize: fontSize,
-                    ),
-                  ),
-                ),
+            child: Padding(
+              padding: const EdgeInsets.only(
+                left: 5,
+                right: 5,
+              ),
+              child: Text(
+                text ?? "",
+                textAlign: TextAlign.center,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+            onPressed: onPressed,
+            onLongPress: onLongPressed,
+            style: ElevatedButton.styleFrom(
+              foregroundColor: textColor,
+              backgroundColor: Colors.transparent,
+              shadowColor: Colors.transparent,
+              minimumSize: minimumSize,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(borderRadius),
+              ),
+              padding: stylePadding,
+              textStyle: GoogleFonts.getFont(
+                font,
+                fontWeight: fontWeight,
+                color: textColor,
+                fontSize: fontSize,
+              ),
+            ),
+          ),
         ));
   }
-
-
 }
