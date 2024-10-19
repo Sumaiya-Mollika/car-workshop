@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "945022811905",
+    "project_id": "carcare-ec940",
+    "storage_bucket": "carcare-ec940.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:945022811905:android:397874f209ef41e6522500",
+        "android_client_info": {
+          "package_name": "com.carcare.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCIw7_Xiru6Csp9Z8kbnOyrzyAB2tuFDq4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
