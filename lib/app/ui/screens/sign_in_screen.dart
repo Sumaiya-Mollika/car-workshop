@@ -3,6 +3,7 @@ import 'package:car_care/app/ui/components/button_component.dart';
 import 'package:car_care/app/ui/components/text_field_component.dart';
 import 'package:car_care/app/ui/components/text_component.dart';
 import 'package:car_care/app/ui/screens/sign_up_screen.dart';
+import 'package:car_care/app/utils/constants.dart';
 import 'package:car_care/app/utils/style.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -89,7 +90,7 @@ class SignInScreen extends StatelessWidget with Base{
                             ),
                          
                             TextComponent('Sign Up',color: lightPrimaryColor,fontWeight: titleFontWeight,onPressed: (){
-                              Get.offAll(()=>SignUpScreen());
+                              Get.offAll(()=>SignUpScreen(),transition: sendTransition);
                             },),
                           ],
                         ),

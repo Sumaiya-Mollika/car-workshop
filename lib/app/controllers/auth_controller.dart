@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:car_care/app/ui/screens/sign_in_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -36,29 +38,30 @@ late Rx<User?> _user;
      // Get.offAll(HomeScreen());
     }
   }
- // Registration
-//   Future<void> register(String email, String password, String role) async {
-//     displayLoading();
-//     try {
-//       // Create the user in Firebase Auth
-//       UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
-//         email: email,
-//         password: password,
-//       );
-      
-//       // Save the user's role in Firestore
-//       await _firestore.collection('users').doc(userCredential.user!.uid).set({
-//         'email': email,
-//         'role': role,  // Save the role (admin or mechanic)
-//       });
-// dismissLoading();
-//       Get.snackbar("Success", "Account created successfully");
-//       // Redirect to a suitable page (home or dashboard) after registration
-//     } catch (e) {
-//       dismissLoading();
-//       Get.snackbar("Error", e.toString());
-//     }
-//   }
+
+  Future<void> register() async {
+    displayLoading();
+    try {
+ 
+      UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+        email: emailController.value.text,
+        password: passwordController.value.text,
+      );
+  
+      await _firestore.collection('users-with-role').doc(userCredential.user!.uid).set({
+        'email': emailController.value.text,
+        // 'role': userRole.value,
+        'role': 'admin',
+      });
+dismissLoading();
+      Get.snackbar("Success", "Account created successfully");
+   
+    } catch (e) {
+      log(e.toString());
+      dismissLoading();
+      Get.snackbar("Error", e.toString());
+    }
+  }
 
   // Login
   // Future<void> signIn(String email, String password) async {
@@ -81,4 +84,14 @@ late Rx<User?> _user;
     await _auth.signOut();
     Get.snackbar("Success", "Logged out successfully");
   }
+
+   bool disableButton(){
+if(emailController.value.text.isEmail&&passwordController.value.text.isNotEmpty&&confrimpPasswordController.value.text.isNotEmpty){
+  return false;
+}else{
+ return true;
 }
+  }
+}
+
+

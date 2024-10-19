@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:945022811905:android:397874f209ef41e6522500",
+        "mobilesdk_app_id": "1:945022811905:android:936d335028628ad3522500",
         "android_client_info": {
-          "package_name": "com.carcare.app"
+          "package_name": "com.carworkshop.app"
         }
       },
       "oauth_client": [],

@@ -82,7 +82,7 @@ class _TextFieldComponentState
         ),
           
           
-        obscureText: _fieldVisibility,
+        obscureText:widget.isPasswordField==true? _fieldVisibility:false,
         keyboardType: TextInputType.visiblePassword,
         textInputAction: widget.textInputAction,
         decoration: InputDecoration(

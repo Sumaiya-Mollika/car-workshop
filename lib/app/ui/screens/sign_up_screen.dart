@@ -2,6 +2,7 @@ import 'package:car_care/app/ui/components/button_component.dart';
 
 import 'package:car_care/app/ui/components/text_field_component.dart';
 import 'package:car_care/app/ui/screens/sign_in_screen.dart';
+import 'package:car_care/app/utils/constants.dart';
 import 'package:car_care/app/utils/style.dart';
 import 'package:car_care/config/base.dart';
 import 'package:car_care/gen/assets.gen.dart';
@@ -54,26 +55,15 @@ class SignUpScreen extends StatelessWidget with Base {
                       right: 30,
                     ),
                     child: Column(
-                      children: <Widget>[
+                      children:[
                         Container(
                           padding: EdgeInsets.all(5),
                           decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10), boxShadow: [
                             BoxShadow(color: Color.fromRGBO(143, 148, 251, .2), blurRadius: 20.0, offset: Offset(0, 10))
                           ]),
                           child: Column(
-                            children: <Widget>[
-                              // Container(
-                              //   padding: EdgeInsets.all(8.0),
-                              //   decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey.shade100))),
-                              //   child: TextField(
-                              //     onChanged: authC.email,
-                              //     decoration: InputDecoration(
-                              //         errorText: validateEmail(authC.email.value),
-                              //         border: InputBorder.none,
-                              //         hintText: "Email",
-                              //         hintStyle: TextStyle(color: Colors.grey[400])),
-                              //   ),
-                              // ),
+                            children: [
+                
                             TextFieldComponent(
                              
                                 hint: "Email",
@@ -81,42 +71,29 @@ class SignUpScreen extends StatelessWidget with Base {
                               textController: authC.emailController,),
                                 const Divider(height: 0,color: kDividerColor,),
                             TextFieldComponent(
-                             
+                             isPasswordField: true,
                                 hint: "Password",
                                 onChanged: (v){},
                               textController: authC.passwordController,),
                                 const Divider(height: 0,color: kDividerColor,),
                             TextFieldComponent(
-                             
+                              isPasswordField: true,
                                 hint: "Confrim Password",
                                 onChanged: (v){},
                               textController: authC.confrimpPasswordController,),
-                              // Container(
-                              //   padding: EdgeInsets.all(8.0),
-                              //   child: TextField(
-                              //     onChanged: authC.confirmPassword,
-                              //     obscureText: authC.isObscure.value,
-                              //     decoration: InputDecoration(
-                              //         suffixIcon: IconButton(
-                              //           onPressed: () => authC.isObscure.toggle(),
-                              //           icon: Icon(
-                              //             authC.isObscure.value ? EvaIcons.eyeOffOutline : EvaIcons.eyeOutline,
-                              //             color: Color.fromRGBO(143, 148, 251, 1),
-                              //           ),
-                              //         ),
-                              //         border: InputBorder.none,
-                              //         hintText: "Confrim Password",
-                              //         errorText: validateConfirmPassword(authC.password.value, authC.confirmPassword.value),
-                              //         hintStyle: TextStyle(color: Colors.grey[400])),
-                              //   ),
-                              // )
+                   
                             ],
                           ),
                         ),
                         SizedBox(
                           height: 30,
                         ),
-                          ButtonComponent(text:"Sign Up",onPressed: (){},),
+                        ButtonComponent(
+                           //  cancelButton:!authC.disableButton(),
+                              text:"Sign Up",onPressed: (){
+                              authC.register();
+                            },),
+                         
                         // GestureDetector(
                         //   onTap: () => authC.isSubmitButtonValid() ? authC.signUp(authC.email.value, authC.password.value) : null,
                         //   child: Container(
@@ -155,7 +132,7 @@ class SignUpScreen extends StatelessWidget with Base {
                             ),
                             GestureDetector(
                               onTap: () {
-                                Get.offAll( ()=>SignInScreen());
+                                Get.offAll( ()=>SignInScreen(),transition: sendTransition);
                               //  authC.clearValue();
                               },
                               child: Text(
@@ -174,4 +151,6 @@ class SignUpScreen extends StatelessWidget with Base {
           ),
         ));
   }
+
+
 }

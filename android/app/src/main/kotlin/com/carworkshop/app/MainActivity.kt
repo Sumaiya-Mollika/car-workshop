@@ -1,4 +1,4 @@
-package com.carcare.app
+package com.carworkshop.app
 
 import io.flutter.embedding.android.FlutterActivity
 
