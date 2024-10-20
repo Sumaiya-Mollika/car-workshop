@@ -96,7 +96,7 @@ class _TextFieldComponentState
         
           errorMaxLines: 3,
           border: InputBorder.none,
-      
+        contentPadding: const EdgeInsets.symmetric(horizontal: 10),
           suffixIcon:widget.isPasswordField==true? GestureDetector(
               onTap: () {
                 setState(() {
