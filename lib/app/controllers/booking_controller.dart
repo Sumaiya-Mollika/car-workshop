@@ -20,13 +20,18 @@ class BookingController extends GetxController {
   final mechanics = RxList<UserWithRole>([]);
   final allBookings = RxList<Booking>([]);
   final filteredBookings = RxList<Booking>([]);
+  final eventLoaderBookings = RxList<Booking>([]);
   final selectedMechanic = Rx<UserWithRole?>(null);
   final startDate = Rx<DateTime?>(null);
   final endDate = Rx<DateTime?>(null);
+ 
+  
+  final focusedDay = Rx<DateTime?>(DateTime.now());
+  final selectedDay = Rx<DateTime?>(null);
   @override
   void onInit() {
     super.onInit();
-    //fetchMechanics();
+
   }
 
   void fetchMechanics() {
@@ -72,6 +77,7 @@ class BookingController extends GetxController {
           .doc(bookingId)
           .set(newBooking.toMap());
       showMessage("Booking created successfully!");
+      Get.back();
     } catch (e) {
       showMessage("Failed to create booking: $e", isError: true);
     }
@@ -103,33 +109,34 @@ class BookingController extends GetxController {
   var bookings = snapshot.docs.map((doc) {
         return Booking.fromMap(doc.data(), doc.id);
       }).toList();
-      allBookings.value = bookings; 
-      log(allBookings.toString());
        dismissLoading(); 
+      allBookings.value = bookings; 
+      
+       filterBookingsByDate( focusedDay.value!); 
+      
   }, onError: (error) {
    showMessage(error,isError: true); 
   });
 
   }
 
-  // Filter bookings for the selected day
   void filterBookingsByDate(DateTime selectedDay) {
-     displayLoading();
+     //displayLoading();
     filteredBookings.value = allBookings.where((booking) {
       return isSameDay(booking.startDateTime, selectedDay);  // Filter by date
     }).toList();
 
-    dismissLoading();
+  //  dismissLoading();
   }
 
-  // Get bookings for a specific day (to display on the calendar)
-  List<Booking> getBookingsForDay(DateTime day) {
+
+ List<Booking> getBookingsForDay(DateTime day) {
     return allBookings.where((booking) {
       return isSameDay(booking.startDateTime, day);
     }).toList();
   }
 
-  // Fetch bookings only for the logged-in mechanic
+
   void fetchMechanicBookings(String mechanicId) {
     _firestore.collection('bookings')
       .where('mechanicId', isEqualTo: mechanicId)
@@ -138,6 +145,7 @@ class BookingController extends GetxController {
           return Booking.fromMap(doc.data(), doc.id);
         }).toList();
         allBookings.value = bookings;
+         filterBookingsByDate( focusedDay.value!); 
       });
   }
 }

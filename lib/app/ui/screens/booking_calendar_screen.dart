@@ -20,21 +20,22 @@ class BookingCalendarScreen extends StatefulWidget {
 
 class _BookingCalendarScreenState extends State<BookingCalendarScreen>with Base {
   CalendarFormat _calendarFormat = CalendarFormat.month;
-  DateTime _focusedDay = DateTime.now();
-  DateTime? _selectedDay;
+  // DateTime _focusedDay = DateTime.now();
+  // DateTime? _selectedDay;
   
 
 
   @override
   void initState() {
     super.initState();
-    _selectedDay = _focusedDay;
+    bookingC.selectedDay.value = bookingC.focusedDay.value;
+ 
     if (authC.userRole.value == 'mechanic') {
   bookingC.fetchMechanicBookings(authC.user.value!.uid);  
 } else {
   bookingC.fetchBookings();  
 }
-  
+  // bookingC.filterBookingsByDate( bookingC.selectedDay.value!); 
   }
 
   @override
@@ -48,29 +49,31 @@ class _BookingCalendarScreenState extends State<BookingCalendarScreen>with Base 
         ],),
       body: Column(
         children: [
-          TableCalendar(
-            focusedDay: _focusedDay,
-            firstDay: DateTime.utc(2020, 1, 1),
-            lastDay: DateTime.utc(2030, 12, 31),
-            calendarFormat: _calendarFormat,
-            selectedDayPredicate: (day) {
-              return isSameDay(_selectedDay, day);
-            },
-            onDaySelected: (selectedDay, focusedDay) {
-              setState(() {
-                _selectedDay = selectedDay;
-                _focusedDay = focusedDay;
-              });
-            bookingC.filterBookingsByDate(selectedDay); 
-            },
-            onFormatChanged: (format) {
-              setState(() {
-                _calendarFormat = format;
-              });
-            },
-            eventLoader: (day) {
-              return bookingC.getBookingsForDay(day);  
-            },
+          Obx(
+         ()=> TableCalendar(
+              focusedDay: bookingC.focusedDay.value!,
+              firstDay: DateTime(2020, 1, 1),
+              lastDay: DateTime(2030, 12, 31),
+              calendarFormat: _calendarFormat,
+              selectedDayPredicate: (day) {
+                return isSameDay( bookingC.selectedDay.value, day);
+              },
+              onDaySelected: (selectedDay, focusedDay) {
+               
+                   bookingC.selectedDay.value = selectedDay;
+                   bookingC.focusedDay.value = focusedDay;
+               
+              bookingC.filterBookingsByDate(selectedDay); 
+              },
+              onFormatChanged: (format) {
+                setState(() {
+                  _calendarFormat = format;
+                });
+              },
+              eventLoader: (day) {
+                return bookingC.getBookingsForDay(day);  
+              },
+            ),
           ),
           Expanded(
             child: Obx(() {

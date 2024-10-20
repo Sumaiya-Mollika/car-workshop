@@ -21,6 +21,9 @@ class AuthController extends GetxController {
 final user = Rx<User?>(null);
   final selectedRole = RxString("mechanic"); 
   final userRole  = RxString(""); 
+  final email  = RxString(""); 
+  final password  = RxString(""); 
+  final confrimpPassword  = RxString(""); 
   final isDisable = RxBool(false);
 
 

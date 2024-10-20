@@ -37,12 +37,15 @@ class SignInScreen extends StatelessWidget with Base {
         children: [
           _buildTextFieldContainer(),
           const SizedBox(height: 30),
-          ButtonComponent(
-            text: "Sign In",
-            onPressed: () {
-            authC.  signIn();
-            //  authC.login(); // Call the authentication login method
-            },
+          Obx(
+           ()=>ButtonComponent(
+              cancelButton: !authC.email.value.isNotEmpty&&authC.password.value.isNotEmpty,
+              text: "Sign In",
+              onPressed: () {
+              authC.  signIn();
+              //  authC.login(); // Call the authentication login method
+              },
+            ),
           ),
           _buildSignUpOption(),
         ],
@@ -56,14 +59,18 @@ class SignInScreen extends StatelessWidget with Base {
           children: [
             TextFieldComponent(
               hint: "Email",
-              onChanged: (v) {},
+              onChanged: (String?value) {
+                authC.email.value=value!;
+              },
               textController: authC.emailController.value,
             ),
             const Divider(height: 0, color: kDividerColor),
             TextFieldComponent(
               isPasswordField: true,
               hint: "Password",
-              onChanged: (v) {},
+              onChanged: (String?value) {
+                 authC.password.value=value!;
+              },
               textController: authC.passwordController.value,
             ),
           ],
