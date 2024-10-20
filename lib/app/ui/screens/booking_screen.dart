@@ -1,3 +1,4 @@
+import 'package:car_care/app/ui/components/button_component.dart';
 import 'package:car_care/app/ui/components/text_component.dart';
 import 'package:car_care/app/ui/components/text_field_component.dart';
 import 'package:car_care/app/utils/style.dart';
@@ -5,6 +6,7 @@ import 'package:car_care/config/base.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../models/user_with_role_model.dart';
 import '../components/date_picker_component.dart';
 import '../components/divider_component.dart';
 import '../components/dropdown_component.dart';
@@ -17,10 +19,12 @@ class BookingScreen extends StatelessWidget with Base{
 
   @override
   Widget build(BuildContext context) {
+ bookingC.  fetchMechanics(); 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: primaryColor,
-        title: const TextComponent("Create Booking",fontWeight: titleFontWeight,color: kWhiteColor,),centerTitle: true,),
+        
+   
+        title: const TextComponent("Create Booking",fontWeight: titleFontWeight,color: kWhiteColor,),),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
@@ -49,63 +53,6 @@ class BookingScreen extends StatelessWidget with Base{
                     bookingC.registrationPlate.value=value!;
                   },hint:"Registration Plate" ,padding: EdgeInsets.zero,),
                
-            
-                 
-              
-               
-                 
-                    // SizedBox(height: 16),
-                    // // DateTime pickers
-                    // ElevatedButton(
-                    //   onPressed: () {
-                    //     showDatePicker(
-                    //       context: context,
-                    //       initialDate: DateTime.now(),
-                    //       firstDate: DateTime(2000),
-                    //       lastDate: DateTime(2101),
-                    //     ).then((date) {
-                    //       if (date != null) {
-                    //         startDateTime = date;
-                    //         endDateTime = date.add(Duration(hours: 1)); // Default 1-hour booking
-                    //       }
-                    //     });
-                    //   },
-                    //   child: Text("Select Start Date/Time"),
-                    // ),
-                    // SizedBox(height: 16),
-                    // // Dropdown for selecting mechanic
-                    // DropdownButton<String>(
-                    //   value: selectedMechanic,
-                    //   hint: Text("Select Mechanic"),
-                    //   onChanged: (value) {
-                    //     selectedMechanic = value!;
-                    //   },
-                    //   items: bookingC.mechanics.map((mechanic) {
-                    //     return DropdownMenuItem<String>(
-                    //       value: mechanic['id'], // Mechanic's Firebase user ID
-                    //       child: Text(mechanic['name']),
-                    //     );
-                    //   }).toList(),
-                    // ),
-                    // SizedBox(height: 24),
-                    // ElevatedButton(
-                    //   onPressed: () {
-                    //     bookingController.createBooking(
-                    //       // carMakeController.text,
-                    //       // carModelController.text,
-                    //       // carYearController.text,
-                    //       // registrationPlateController.text,
-                    //       // customerNameController.text,
-                    //       // customerPhoneController.text,
-                    //       // customerEmailController.text,
-                    //       // bookingTitleController.text,
-                    //       // startDateTime,
-                    //       // endDateTime,
-                    //       // selectedMechanic!,
-                    //     );
-                    //   },
-                    //   child: Text("Create Booking"),å
-                    // ),
                   ],
                 ),
               ),
@@ -153,24 +100,37 @@ class BookingScreen extends StatelessWidget with Base{
                       },
                     ),
                       const DividerComponent(),
-                    // DropdownComponent<String>(
-                    //   items: bookingC.mechanics,
-                    //   selectedValue: bookingC.selectedMechanic,
-                    //   hintText: "Assign Mechanic",
-                    //   getItemLabel: (mechanic) => mechanic ?? "",
-                    //   onChanged: (String? value) {
-                    //     bookingC.selectedMechanic.value = value;
-                    //   },
-                    // ),
+                    DropdownComponent<UserWithRole>(
+                      items: bookingC.mechanics,
+                      selectedValue: bookingC.selectedMechanic,
+                      hintText: "Assign Mechanic",
+                      getItemLabel: (mechanic) => mechanic!.name ,
+                      onChanged: (UserWithRole? value) {
+                         //bookingC.  fetchMechanics(); 
+                        bookingC.selectedMechanic.value = value;
+                      },
+                    ),
                         ],
                       ),
                
                 
-              )
+              ),
+          
             ],
           ),
         ),
       ),
+      persistentFooterButtons: [
+        Obx(
+       ()=> ButtonComponent(
+        padding: const EdgeInsets.symmetric(horizontal:50),
+            cancelButton:bookingC. disableBookingButton(),
+            text: "Create Booking",
+            onPressed: (){
+               bookingC.createBooking();
+            }),
+        )
+      ],
     );
   }
 }

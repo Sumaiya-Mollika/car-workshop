@@ -1,9 +1,11 @@
+import 'package:car_care/app/utils/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../ui/screens/booking_screen.dart';
+import '../ui/screens/booking_calendar_screen.dart';
+
 import '../ui/screens/sign_in_screen.dart';
 import '../utils/easyloading_helper.dart';
 
@@ -16,35 +18,17 @@ class AuthController extends GetxController {
   var confrimpPasswordController = TextEditingController().obs;
 
   // Initialize _user directly here
-  Rx<User?> _user = Rx<User?>(null);
+final user = Rx<User?>(null);
   final selectedRole = RxString("mechanic"); 
+  final userRole  = RxString(""); 
   final isDisable = RxBool(false);
 
-  @override
-  void onInit() {
-    super.onInit();
-    // Bind the auth state changes stream
-    _user.bindStream(_auth.authStateChanges());
-  }
 
-  @override
-  void onReady() {
-    super.onReady();
-    // Bind user changes
-    _user.bindStream(_auth.userChanges());
-    // React to user changes
-    ever(_user, _initaialPage);
-  }
 
-  void _initaialPage(User? user) {
-    if (user == null) {
-      Get.offAll(() => SignInScreen());
-    } else {
-      Get.offAll(() => BookingScreen());
-      
-    }
-  }
-
+getUserRole( User? user)async{
+   DocumentSnapshot userDoc = await _firestore.collection('users-with-role').doc(user!.uid).get();
+      userRole.value = userDoc['role']; 
+}
   Future<void> register() async {
     displayLoading();
     try {
@@ -69,11 +53,14 @@ class AuthController extends GetxController {
   Future<void> signIn() async {
     displayLoading();
     try {
-      await _auth.signInWithEmailAndPassword(
+     UserCredential userCredential=  await _auth.signInWithEmailAndPassword(
         email: emailController.value.text, 
         password: passwordController.value.text
       );
       showMessage("Sign In Successful");
+      user.value=userCredential.user;
+      getUserRole(userCredential.user);
+        Get.offAll(() => const BookingCalendarScreen());
     } catch (e) {
       showMessage(e.toString(), isError: true);
     }
@@ -81,7 +68,9 @@ class AuthController extends GetxController {
 
   Future<void> logout() async {
     await _auth.signOut();
-    Get.snackbar("Success", "Logged out successfully");
+    clearValues();
+    showMessage("Logged out successfully");
+   Get.offAll(()=>SignInScreen(),transition: sendTransition);
   }
 
   void clearValues() {

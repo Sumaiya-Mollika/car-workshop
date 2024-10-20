@@ -1,5 +1,6 @@
 import 'package:car_care/app/controllers/auth_controller.dart';
 import 'package:car_care/app/utils/easyloading_helper.dart';
+import 'package:car_care/app/utils/style.dart';
 import 'package:car_care/config/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +34,17 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
     title: 'Car Workshop App',
       theme: ThemeData(
-
+        appBarTheme: const AppBarTheme(
+          backgroundColor: primaryColor,
+          centerTitle: true,
+         iconTheme: IconThemeData(
+          color: kWhiteColor
+        ),
+        ),
+       
+dividerTheme: const DividerThemeData(
+  color: Colors.transparent
+),
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),

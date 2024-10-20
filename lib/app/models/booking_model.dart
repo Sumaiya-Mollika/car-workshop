@@ -46,7 +46,7 @@ class Booking {
   }
 
 
-  static Booking fromMap(Map<String, dynamic> map) {
+  static Booking fromMap(Map<String, dynamic> map, String id) {
     return Booking(
       id: map['id'],
       carMake: map['carMake'],

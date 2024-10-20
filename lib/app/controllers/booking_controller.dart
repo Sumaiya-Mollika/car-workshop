@@ -1,81 +1,143 @@
 import 'dart:developer';
 
+import 'package:car_care/app/utils/easyloading_helper.dart';
 import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:table_calendar/table_calendar.dart';
 import '../models/booking_model.dart';
-
+import '../models/user_with_role_model.dart';
 
 class BookingController extends GetxController {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  final bookingTitle=RxString("");
-  final carMake=RxString("");
-  final carModel=RxString("");
-  final carYear=RxString("");
-  final registrationPlate=RxString("");
-  final customerName=RxString("");
-  final customerPhone=RxString("");
-  final customerEmail=RxString("");
-final mechanics = RxList([]);  
-
-final startDate=Rx<DateTime?> (null);
-final endDate=Rx<DateTime?> (null);
+  final bookingTitle = RxString("");
+  final carMake = RxString("");
+  final carModel = RxString("");
+  final carYear = RxString("");
+  final registrationPlate = RxString("");
+  final customerName = RxString("");
+  final customerPhone = RxString("");
+  final customerEmail = RxString("");
+  final mechanics = RxList<UserWithRole>([]);
+  final allBookings = RxList<Booking>([]);
+  final filteredBookings = RxList<Booking>([]);
+  final selectedMechanic = Rx<UserWithRole?>(null);
+  final startDate = Rx<DateTime?>(null);
+  final endDate = Rx<DateTime?>(null);
   @override
   void onInit() {
     super.onInit();
-    fetchMechanics();  // Load mechanics when controller is initialized
+    //fetchMechanics();
   }
 
-  // Fetch mechanics from Firestore
   void fetchMechanics() {
-    _firestore.collection('users').where('role', isEqualTo: 'mechanic').get().then((querySnapshot) {
+    mechanics.clear();
+    selectedMechanic.value = null;
+    _firestore
+        .collection('users-with-role')
+        .where('role', isEqualTo: 'mechanic')
+        .get()
+        .then((querySnapshot) {
       mechanics.value = querySnapshot.docs.map((doc) {
-        return {'id': doc.id, 'name': doc['email']};  // Use email as name for now
+        return UserWithRole.fromJson(doc.data(), doc.id);
       }).toList();
+    }).catchError((error) {
+      log('Error fetching mechanics: $error');
     });
 
     log(mechanics.toJson().toString());
   }
 
-  // Create a new booking in Firestore
-  Future<void> createBooking(
-    String carMake,
-    String carModel,
-    String carYear,
-    String registrationPlate,
-    String customerName,
-    String customerPhone,
-    String customerEmail,
-    String bookingTitle,
-    DateTime startDateTime,
-    DateTime endDateTime,
-    String mechanicId,
-  ) async {
+  Future<void> createBooking() async {
+    displayLoading();
     try {
-      // Generate a new document ID
       String bookingId = _firestore.collection('bookings').doc().id;
 
-      // Create a Booking object
       Booking newBooking = Booking(
         id: bookingId,
-        carMake: carMake,
-        carModel: carModel,
-        carYear: carYear,
-        registrationPlate: registrationPlate,
-        customerName: customerName,
-        customerPhone: customerPhone,
-        customerEmail: customerEmail,
-        bookingTitle: bookingTitle,
-        startDateTime: startDateTime,
-        endDateTime: endDateTime,
-        mechanicId: mechanicId,
+        carMake: carMake.value,
+        carModel: carModel.value,
+        carYear: carYear.value,
+        registrationPlate: registrationPlate.value,
+        customerName: customerName.value,
+        customerPhone: customerPhone.value,
+        customerEmail: customerEmail.value,
+        bookingTitle: bookingTitle.value,
+        startDateTime: startDate.value!,
+        endDateTime: endDate.value!,
+        mechanicId: selectedMechanic.value!.id,
       );
 
-      // Save the booking to Firestore
-      await _firestore.collection('bookings').doc(bookingId).set(newBooking.toMap());
-
-      Get.snackbar("Success", "Booking created successfully!");
+      await _firestore
+          .collection('bookings')
+          .doc(bookingId)
+          .set(newBooking.toMap());
+      showMessage("Booking created successfully!");
     } catch (e) {
-      Get.snackbar("Error", "Failed to create booking: $e");
+      showMessage("Failed to create booking: $e", isError: true);
     }
+  }
+
+  bool disableBookingButton() {
+    if (carMake.value.isNotEmpty &&
+        carModel.value.isNotEmpty &&
+        carYear.value.isNotEmpty &&
+        registrationPlate.value.isNotEmpty &&
+        customerName.value.isNotEmpty &&
+        customerPhone.value.isNotEmpty &&
+        customerEmail.value.isNotEmpty &&
+        bookingTitle.value.isNotEmpty &&
+        startDate.value != null &&
+        endDate.value != null &&
+        selectedMechanic.value != null) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+
+  void fetchBookings() {
+    displayLoading();
+
+     _firestore.collection('bookings').snapshots().listen((snapshot) {
+  var bookings = snapshot.docs.map((doc) {
+        return Booking.fromMap(doc.data(), doc.id);
+      }).toList();
+      allBookings.value = bookings; 
+      log(allBookings.toString());
+       dismissLoading(); 
+  }, onError: (error) {
+   showMessage(error,isError: true); 
+  });
+
+  }
+
+  // Filter bookings for the selected day
+  void filterBookingsByDate(DateTime selectedDay) {
+     displayLoading();
+    filteredBookings.value = allBookings.where((booking) {
+      return isSameDay(booking.startDateTime, selectedDay);  // Filter by date
+    }).toList();
+
+    dismissLoading();
+  }
+
+  // Get bookings for a specific day (to display on the calendar)
+  List<Booking> getBookingsForDay(DateTime day) {
+    return allBookings.where((booking) {
+      return isSameDay(booking.startDateTime, day);
+    }).toList();
+  }
+
+  // Fetch bookings only for the logged-in mechanic
+  void fetchMechanicBookings(String mechanicId) {
+    _firestore.collection('bookings')
+      .where('mechanicId', isEqualTo: mechanicId)
+      .snapshots().listen((snapshot) {
+        var bookings = snapshot.docs.map((doc) {
+          return Booking.fromMap(doc.data(), doc.id);
+        }).toList();
+        allBookings.value = bookings;
+      });
   }
 }

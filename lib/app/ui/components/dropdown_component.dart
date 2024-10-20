@@ -1,8 +1,11 @@
+import 'package:car_care/app/ui/components/text_component.dart';
+import 'package:car_care/app/utils/style.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class DropdownComponent<T> extends StatelessWidget {
-  final List<T> items;
+  final RxList<T> items;
   final Rx<T?> selectedValue;
   final String hintText;
   final String Function(T?) getItemLabel;
@@ -23,7 +26,12 @@ class DropdownComponent<T> extends StatelessWidget {
           value: selectedValue.value,
           decoration: InputDecoration(
             hintText: hintText,
-            border: const OutlineInputBorder(),
+            hintStyle: const TextStyle(
+              color: hintColor,
+              fontFamily: primaryFont,
+              fontSize: textSmallFontSize,
+           ),
+            border: InputBorder.none,
             contentPadding: const EdgeInsets.all(16.0),
           ),
           isExpanded: true,
@@ -33,7 +41,7 @@ class DropdownComponent<T> extends StatelessWidget {
           items: items.map((T value) {
             return DropdownMenuItem<T>(
               value: value,
-              child: Text(getItemLabel(value)),
+              child: TextComponent(getItemLabel(value)),
             );
           }).toList(),
         ));
