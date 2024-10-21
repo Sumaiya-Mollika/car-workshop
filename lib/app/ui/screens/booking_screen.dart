@@ -39,15 +39,15 @@ class BookingScreen extends StatelessWidget with Base{
            
                   TextFieldComponent(onChanged: (String?value){
                     bookingC.carMake.value=value!;
-                  },hint:"Car Make" ,padding: EdgeInsets.zero,),
+                  },hint:"Made By" ,padding: EdgeInsets.zero,),
                   const DividerComponent(),
                   TextFieldComponent(onChanged: (String?value){
                     bookingC.carModel.value=value!;
-                  },hint:"Car Model" ,padding: EdgeInsets.zero,),
+                  },hint:"Model" ,padding: EdgeInsets.zero,),
                   const DividerComponent(),
                   TextFieldComponent(onChanged: (String?value){
                     bookingC.carYear.value=value!;
-                  },hint:"Car Year" ,padding: EdgeInsets.zero,),
+                  },hint:"Year" ,padding: EdgeInsets.zero,),
                   const DividerComponent(),
                   TextFieldComponent(onChanged: (String?value){
                     bookingC.registrationPlate.value=value!;
@@ -62,15 +62,15 @@ class BookingScreen extends StatelessWidget with Base{
                         children: [
                           TextFieldComponent(onChanged: (String?value){
                                               bookingC.customerName.value=value!;
-                                            },hint:"Customer Name" ,padding: EdgeInsets.zero,),
+                                            },hint:"Name" ,padding: EdgeInsets.zero,),
                                                const DividerComponent(),
                   TextFieldComponent(onChanged: (String?value){
                     bookingC.customerPhone.value=value!;
-                  },hint:"Customer Phone" ,padding: EdgeInsets.zero,),
+                  },hint:"Phone" ,padding: EdgeInsets.zero,),
                   const DividerComponent(),
                   TextFieldComponent(onChanged: (String?value){
                     bookingC.customerEmail.value=value!;
-                  },hint:"Customer Email" ,padding: EdgeInsets.zero,),
+                  },hint:"Email" ,padding: EdgeInsets.zero,),
                         ],
                       ),
                
@@ -82,7 +82,7 @@ class BookingScreen extends StatelessWidget with Base{
                         children: [
                                  TextFieldComponent(onChanged: (String?value){
               bookingC.bookingTitle.value=value!;
-                  },hint:"Booking Title" ,padding: EdgeInsets.zero,),
+                  },hint:"Title" ,padding: EdgeInsets.zero,),
                   const DividerComponent(),
                          DatePickerComponent(
                       selectedDate: bookingC.startDate,

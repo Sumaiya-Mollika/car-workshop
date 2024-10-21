@@ -18,29 +18,43 @@ class AuthController extends GetxController {
   var confrimpPasswordController = TextEditingController().obs;
 
   // Initialize _user directly here
-final user = Rx<User?>(null);
-  final selectedRole = RxString("mechanic"); 
-  final userRole  = RxString(""); 
-  final email  = RxString(""); 
-  final password  = RxString(""); 
-  final confrimpPassword  = RxString(""); 
+  final user = Rx<User?>(null);
+  final selectedRole = RxString("mechanic");
+  final userRole = RxString("");
+  final mechanicEmail = RxString("");
+  final email = RxString("");
+  final password = RxString("");
+  final confrimpPassword = RxString("");
   final isDisable = RxBool(false);
 
+  getUserRoleById(String? userId) async {
+    DocumentSnapshot userDoc =
+        await _firestore.collection('users-with-role').doc(userId).get();
+    userRole.value = userDoc['role'];
+  }
 
+  getMechanicById(String? userId) async {
+    displayLoading();
+    DocumentSnapshot userDoc =
+        await _firestore.collection('users-with-role').doc(userId).get();
 
-getUserRole( User? user)async{
-   DocumentSnapshot userDoc = await _firestore.collection('users-with-role').doc(user!.uid).get();
-      userRole.value = userDoc['role']; 
-}
+    mechanicEmail.value = userDoc['email'];
+    dismissLoading();
+  }
+
   Future<void> register() async {
     displayLoading();
     try {
-      UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+      UserCredential userCredential =
+          await _auth.createUserWithEmailAndPassword(
         email: emailController.value.text,
         password: passwordController.value.text,
       );
 
-      await _firestore.collection('users-with-role').doc(userCredential.user!.uid).set({
+      await _firestore
+          .collection('users-with-role')
+          .doc(userCredential.user!.uid)
+          .set({
         'email': emailController.value.text,
         'role': selectedRole.value,
       });
@@ -56,14 +70,13 @@ getUserRole( User? user)async{
   Future<void> signIn() async {
     displayLoading();
     try {
-     UserCredential userCredential=  await _auth.signInWithEmailAndPassword(
-        email: emailController.value.text, 
-        password: passwordController.value.text
-      );
+      UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+          email: emailController.value.text,
+          password: passwordController.value.text);
       showMessage("Sign In Successful");
-      user.value=userCredential.user;
-      getUserRole(userCredential.user);
-        Get.offAll(() => const BookingCalendarScreen());
+      user.value = userCredential.user;
+      getUserRoleById(userCredential.user!.uid);
+      Get.offAll(() => const BookingCalendarScreen());
     } catch (e) {
       showMessage(e.toString(), isError: true);
     }
@@ -73,10 +86,12 @@ getUserRole( User? user)async{
     await _auth.signOut();
     clearValues();
     showMessage("Logged out successfully");
-   Get.offAll(()=>SignInScreen(),transition: sendTransition);
+    Get.offAll(() => SignInScreen(), transition: sendTransition);
   }
 
   void clearValues() {
+    email.value="";
+    password.value="";
     emailController.value.clear();
     passwordController.value.clear();
     confrimpPasswordController.value.clear();
@@ -87,5 +102,9 @@ getUserRole( User? user)async{
         passwordController.value.text.isNotEmpty &&
         confrimpPasswordController.value.text.isNotEmpty &&
         selectedRole.value.isNotEmpty);
+  }
+
+  bool isLoginButtonDisable() {
+    return !(email.value.isEmail && password.value.isNotEmpty);
   }
 }

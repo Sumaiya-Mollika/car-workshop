@@ -121,12 +121,11 @@ class BookingController extends GetxController {
   }
 
   void filterBookingsByDate(DateTime selectedDay) {
-     //displayLoading();
+ 
     filteredBookings.value = allBookings.where((booking) {
       return isSameDay(booking.startDateTime, selectedDay);  // Filter by date
     }).toList();
 
-  //  dismissLoading();
   }
 
 

@@ -10,6 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:table_calendar/table_calendar.dart';
 
+import '../../utils/utils.dart';
+
 
 class BookingCalendarScreen extends StatefulWidget {
   const BookingCalendarScreen({super.key});
@@ -88,9 +90,10 @@ class _BookingCalendarScreenState extends State<BookingCalendarScreen>with Base 
                       padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 10),
                       child: ShadowContainerComponent(
                        ListTile(
-                          title: TextComponent(booking.bookingTitle,textAlign: TextAlign.start,),
-                          subtitle: TextComponent('${booking.startDateTime} - ${booking.endDateTime}',textAlign: TextAlign.start),
+                          title: TextComponent(booking.bookingTitle,textAlign: TextAlign.center,fontSize: k24heightValue,),
+                          subtitle: TextComponent( '${formatDateTime(booking.startDateTime)} - ${formatDateTime(booking.endDateTime)}',textAlign: TextAlign.center,fontSize: k12FontSize,padding: const EdgeInsets.only(top: 8),),
                           onTap: () {
+                            authC. getMechanicById(booking.mechanicId);
                             Get.to(() => BookingDetailsScreen(booking),transition: sendTransition);
                           },
                         ),

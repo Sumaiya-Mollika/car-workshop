@@ -11,7 +11,6 @@ import 'package:get/get.dart';
 
 import '../../../config/base.dart';
 
-
 class SignInScreen extends StatelessWidget with Base {
   SignInScreen({super.key});
 
@@ -22,7 +21,7 @@ class SignInScreen extends StatelessWidget with Base {
       body: SingleChildScrollView(
         child: Column(
           children: [
-              buildAuthBackground(),
+            buildAuthBackground(),
             _buildForm(context),
           ],
         ),
@@ -38,12 +37,11 @@ class SignInScreen extends StatelessWidget with Base {
           _buildTextFieldContainer(),
           const SizedBox(height: 30),
           Obx(
-           ()=>ButtonComponent(
-              cancelButton: !authC.email.value.isNotEmpty&&authC.password.value.isNotEmpty,
+            () => ButtonComponent(
+              cancelButton: authC.isLoginButtonDisable(),
               text: "Sign In",
               onPressed: () {
-              authC.  signIn();
-              //  authC.login(); // Call the authentication login method
+                authC.signIn();
               },
             ),
           ),
@@ -55,27 +53,26 @@ class SignInScreen extends StatelessWidget with Base {
 
   Widget _buildTextFieldContainer() {
     return ShadowContainerComponent(
-         Column(
-          children: [
-            TextFieldComponent(
-              hint: "Email",
-              onChanged: (String?value) {
-                authC.email.value=value!;
-              },
-              textController: authC.emailController.value,
-            ),
-            const Divider(height: 0, color: kDividerColor),
-            TextFieldComponent(
-              isPasswordField: true,
-              hint: "Password",
-              onChanged: (String?value) {
-                 authC.password.value=value!;
-              },
-              textController: authC.passwordController.value,
-            ),
-          ],
-        ),
-    
+      Column(
+        children: [
+          TextFieldComponent(
+            hint: "Email",
+            onChanged: (String? value) {
+              authC.email.value = value!;
+            },
+            textController: authC.emailController.value,
+          ),
+          const Divider(height: 0, color: kDividerColor),
+          TextFieldComponent(
+            isPasswordField: true,
+            hint: "Password",
+            onChanged: (String? value) {
+              authC.password.value = value!;
+            },
+            textController: authC.passwordController.value,
+          ),
+        ],
+      ),
     );
   }
 
