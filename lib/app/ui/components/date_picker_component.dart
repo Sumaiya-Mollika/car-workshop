@@ -37,7 +37,7 @@ class DatePickerComponent extends StatelessWidget {
               border:InputBorder.none,
               //border: const OutlineInputBorder(),
               contentPadding: const EdgeInsets.all(10),
-              suffixIcon: Icon(Icons.calendar_month,color: primaryColor,)
+              suffixIcon: const Icon(Icons.calendar_month,color: primaryColor,)
             ),
             
           )),

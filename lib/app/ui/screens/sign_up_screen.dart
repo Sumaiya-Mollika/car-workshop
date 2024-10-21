@@ -40,7 +40,7 @@ class SignUpScreen extends StatelessWidget with Base {
               authC.passwordErrorMessage.value,
               fontSize: k14FontSize,
               color: kErrorColor,
-              padding: EdgeInsets.only(top: 10),
+              padding: const EdgeInsets.only(top: 10),
             ),
           ),
           const SizedBox(height: 20),

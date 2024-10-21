@@ -29,11 +29,6 @@ class BookingController extends GetxController {
   
   final focusedDay = Rx<DateTime?>(DateTime.now());
   final selectedDay = Rx<DateTime?>(null);
-  @override
-  void onInit() {
-    super.onInit();
-
-  }
 
   void fetchMechanics() {
     mechanics.clear();
@@ -78,7 +73,7 @@ class BookingController extends GetxController {
           .doc(bookingId)
           .set(newBooking.toMap());
       showMessage("Booking created successfully!");
-      Get.back();
+  fetchBookings();
     } catch (e) {
       showMessage("Failed to create booking: $e", isError: true);
     }
@@ -91,7 +86,7 @@ class BookingController extends GetxController {
         registrationPlate.value.isNotEmpty &&
         customerName.value.isNotEmpty &&
         customerPhone.value.isNotEmpty &&
-        customerEmail.value.isNotEmpty &&
+        customerEmail.value.isEmail &&
         bookingTitle.value.isNotEmpty &&
         startDate.value != null &&
         endDate.value != null &&
@@ -141,7 +136,7 @@ class BookingController extends GetxController {
 
 
   void fetchMechanicBookings(String mechanicId) {
-     log('mechanicId: ${mechanicId}');
+     log('mechanicId: $mechanicId');
     allBookings.clear();
     _firestore.collection('bookings')
       .where('mechanicId', isEqualTo: mechanicId)

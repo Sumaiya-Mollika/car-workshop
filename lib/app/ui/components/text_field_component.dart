@@ -2,6 +2,7 @@ import 'package:car_care/app/utils/style.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 
@@ -25,6 +26,8 @@ class TextFieldComponent extends StatefulWidget {
   final InputBorder? inputDecorationBorder;
   final FloatingLabelBehavior? floatingLabelBehavior;
     final TextEditingController? textController;
+       final List<TextInputFormatter>? inputFormatters;
+         final TextInputType? keyboardType;
   const TextFieldComponent({
     super.key,
     this.hint,
@@ -45,10 +48,12 @@ class TextFieldComponent extends StatefulWidget {
     this.floatingLabelBehavior,
     this.padding = const  EdgeInsets.all(8.0),
     this.textController,
+     this.keyboardType ,
+        this.inputFormatters,
   });
 
   @override
-  _TextFieldComponentState createState() =>
+    State<TextFieldComponent> createState() =>
       _TextFieldComponentState();
 }
 
@@ -80,14 +85,15 @@ class _TextFieldComponentState
           color: widget.textFontColor,
           fontSize: widget.fontSize,
         ),
-          
-          
+            keyboardType: widget.keyboardType,
+         inputFormatters: widget.inputFormatters,  
         obscureText:widget.isPasswordField==true? _fieldVisibility:false,
-        keyboardType: TextInputType.visiblePassword,
+       
         textInputAction: widget.textInputAction,
         decoration: InputDecoration(
           
           hintText: widget.hint ?? "",
+          
           hintStyle: const TextStyle(
               color: hintColor,
               fontFamily: primaryFont,

@@ -2,7 +2,6 @@ import 'package:car_care/app/ui/components/text_component.dart';
 import 'package:car_care/app/utils/style.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class DropdownComponent<T> extends StatelessWidget {
   final RxList<T> items;
@@ -12,13 +11,13 @@ class DropdownComponent<T> extends StatelessWidget {
   final Function(T?) onChanged;
 
   const DropdownComponent({
-    Key? key,
+    super.key,
     required this.items,
     required this.selectedValue,
     required this.hintText,
     required this.getItemLabel,
     required this.onChanged,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

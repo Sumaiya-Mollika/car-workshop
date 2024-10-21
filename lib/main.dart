@@ -1,8 +1,11 @@
+import 'dart:developer';
+
 import 'package:car_care/app/controllers/auth_controller.dart';
 import 'package:car_care/app/utils/easyloading_helper.dart';
 import 'package:car_care/app/utils/style.dart';
 import 'package:car_care/config/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
@@ -20,7 +23,9 @@ Future<void> initializeFirebase() async {
          await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform).then((value) => Get.put(AuthController()));
 
   } catch (e) {
-    print('Error initializing Firebase: $e');
+    if (kDebugMode) {
+      log('Error initializing Firebase: $e');
+    }
   }
 }
 
@@ -48,7 +53,7 @@ dividerTheme: const DividerThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home:  const SplashScreen(),
+      home: const SplashScreen(),
            builder: (context, child) {
         return GestureDetector(
           onTap: () {
