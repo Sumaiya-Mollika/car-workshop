@@ -36,7 +36,7 @@ class SignUpScreen extends StatelessWidget with Base {
           _buildRoleSelection(),
           _buildTextFieldContainer(),
           Obx(
-          ()=>TextComponent(
+            () => TextComponent(
               authC.passwordErrorMessage.value,
               fontSize: k14FontSize,
               color: kErrorColor,

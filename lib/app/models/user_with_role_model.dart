@@ -8,7 +8,7 @@ class UserWithRole {
   factory UserWithRole.fromJson(Map<String, dynamic> json, String id) {
     return UserWithRole(
       id: id,
-      name: json['email'] ?? '',  // Use email as name
+      name: json['email'] ?? '', // Use email as name
     );
   }
 

@@ -29,7 +29,7 @@ class DropdownComponent<T> extends StatelessWidget {
               color: hintColor,
               fontFamily: primaryFont,
               fontSize: textSmallFontSize,
-           ),
+            ),
             border: InputBorder.none,
             contentPadding: const EdgeInsets.all(16.0),
           ),

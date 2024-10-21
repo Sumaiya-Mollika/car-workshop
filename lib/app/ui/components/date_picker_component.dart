@@ -29,17 +29,18 @@ class DatePickerComponent extends StatelessWidget {
         }
       },
       child: Obx(() => TextField(
-        enabled: false,
+            enabled: false,
             decoration: InputDecoration(
-              hintText: selectedDate.value == null
-                  ? hintText
-                  : selectedDate.value!.toLocal().toString().split(' ')[0],
-              border:InputBorder.none,
-              //border: const OutlineInputBorder(),
-              contentPadding: const EdgeInsets.all(10),
-              suffixIcon: const Icon(Icons.calendar_month,color: primaryColor,)
-            ),
-            
+                hintText: selectedDate.value == null
+                    ? hintText
+                    : selectedDate.value!.toLocal().toString().split(' ')[0],
+                border: InputBorder.none,
+                //border: const OutlineInputBorder(),
+                contentPadding: const EdgeInsets.all(10),
+                suffixIcon: const Icon(
+                  Icons.calendar_month,
+                  color: primaryColor,
+                )),
           )),
     );
   }

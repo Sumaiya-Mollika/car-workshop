@@ -12,16 +12,18 @@ import 'package:get/get.dart';
 
 import 'app/ui/screens/splash_screen.dart';
 
-void main()async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-initializeFirebase();
-  
+  initializeFirebase();
+
   runApp(const MyApp());
 }
+
 Future<void> initializeFirebase() async {
   try {
-         await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform).then((value) => Get.put(AuthController()));
-
+    await Firebase.initializeApp(
+            options: DefaultFirebaseOptions.currentPlatform)
+        .then((value) => Get.put(AuthController()));
   } catch (e) {
     if (kDebugMode) {
       log('Error initializing Firebase: $e');
@@ -37,34 +39,26 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-    title: 'Car Workshop App',
+      title: 'Car Workshop App',
       theme: ThemeData(
         appBarTheme: const AppBarTheme(
           backgroundColor: primaryColor,
           centerTitle: true,
-         iconTheme: IconThemeData(
-          color: kWhiteColor
+          iconTheme: IconThemeData(color: kWhiteColor),
         ),
-        ),
-       
-dividerTheme: const DividerThemeData(
-  color: Colors.transparent
-),
+        dividerTheme: const DividerThemeData(color: Colors.transparent),
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
       home: const SplashScreen(),
-           builder: (context, child) {
+      builder: (context, child) {
         return GestureDetector(
           onTap: () {
-           
             closeSoftKeyBoard();
           },
-         
           child: FlutterEasyLoading(child: child!),
         );
       },
     );
   }
 }
-

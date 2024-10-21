@@ -6,7 +6,6 @@ import 'package:flutter/services.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 
-
 class TextFieldComponent extends StatefulWidget {
   final String? hint;
 
@@ -20,23 +19,21 @@ class TextFieldComponent extends StatefulWidget {
   final EdgeInsets padding;
   final bool isFullValidate;
   final Widget? suffixIcon;
- final bool isPasswordField;
+  final bool isPasswordField;
   final Color? prefixIconColor;
   final bool isRemoveBottomBorder;
   final InputBorder? inputDecorationBorder;
   final FloatingLabelBehavior? floatingLabelBehavior;
-    final TextEditingController? textController;
-       final List<TextInputFormatter>? inputFormatters;
-         final TextInputType? keyboardType;
+  final TextEditingController? textController;
+  final List<TextInputFormatter>? inputFormatters;
+  final TextInputType? keyboardType;
   const TextFieldComponent({
     super.key,
     this.hint,
- 
     this.suffixIcon,
-
     required this.onChanged,
     this.isFullValidate = true,
-    this.isPasswordField=false,
+    this.isPasswordField = false,
     this.fontSize = textSmallFontSize,
     this.font = primaryFont,
     this.fontWeight = mediumFontWeight,
@@ -46,19 +43,17 @@ class TextFieldComponent extends StatefulWidget {
     this.isRemoveBottomBorder = true,
     this.inputDecorationBorder,
     this.floatingLabelBehavior,
-    this.padding = const  EdgeInsets.all(8.0),
+    this.padding = const EdgeInsets.all(8.0),
     this.textController,
-     this.keyboardType ,
-        this.inputFormatters,
+    this.keyboardType,
+    this.inputFormatters,
   });
 
   @override
-    State<TextFieldComponent> createState() =>
-      _TextFieldComponentState();
+  State<TextFieldComponent> createState() => _TextFieldComponentState();
 }
 
-class _TextFieldComponentState
-    extends State<TextFieldComponent> {
+class _TextFieldComponentState extends State<TextFieldComponent> {
   bool _fieldVisibility = true;
   final _formKey = GlobalKey<FormState>();
 
@@ -71,50 +66,48 @@ class _TextFieldComponentState
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding:widget. padding,
+      padding: widget.padding,
       child: TextFormField(
-           controller:widget. textController,
-       autovalidateMode: AutovalidateMode.onUserInteraction,
+        controller: widget.textController,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
         onChanged: (value) {
           widget.onChanged(value);
         },
-      
         style: GoogleFonts.getFont(
           widget.font,
           fontWeight: widget.fontWeight,
           color: widget.textFontColor,
           fontSize: widget.fontSize,
         ),
-            keyboardType: widget.keyboardType,
-         inputFormatters: widget.inputFormatters,  
-        obscureText:widget.isPasswordField==true? _fieldVisibility:false,
-       
+        keyboardType: widget.keyboardType,
+        inputFormatters: widget.inputFormatters,
+        obscureText: widget.isPasswordField == true ? _fieldVisibility : false,
         textInputAction: widget.textInputAction,
         decoration: InputDecoration(
-          
           hintText: widget.hint ?? "",
-          
           hintStyle: const TextStyle(
-              color: hintColor,
-              fontFamily: primaryFont,
-              fontSize: textSmallFontSize,
-           ),
-        
+            color: hintColor,
+            fontFamily: primaryFont,
+            fontSize: textSmallFontSize,
+          ),
           errorMaxLines: 3,
           border: InputBorder.none,
-        contentPadding: const EdgeInsets.symmetric(horizontal: 10),
-          suffixIcon:widget.isPasswordField==true? GestureDetector(
-              onTap: () {
-                setState(() {
-                  _fieldVisibility = !_fieldVisibility;
-                });
-              },
-              child:
-                  Icon( _fieldVisibility? EvaIcons.eyeOffOutline:EvaIcons.eyeOutline, color: lightPrimaryColor)
-               ):null,
+          contentPadding: const EdgeInsets.symmetric(horizontal: 10),
+          suffixIcon: widget.isPasswordField == true
+              ? GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      _fieldVisibility = !_fieldVisibility;
+                    });
+                  },
+                  child: Icon(
+                      _fieldVisibility
+                          ? EvaIcons.eyeOffOutline
+                          : EvaIcons.eyeOutline,
+                      color: lightPrimaryColor))
+              : null,
         ),
       ),
     );
   }
 }
-

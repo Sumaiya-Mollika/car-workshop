@@ -84,12 +84,11 @@ class ButtonComponent extends StatelessWidget {
           ),
           width: width,
           child: ElevatedButton(
-       
-            onPressed:cancelButton == false? onPressed:null,
+            onPressed: cancelButton == false ? onPressed : null,
             onLongPress: onLongPressed,
             style: ElevatedButton.styleFrom(
-           foregroundColor: textColor,
-            backgroundColor: Colors.transparent,
+              foregroundColor: textColor,
+              backgroundColor: Colors.transparent,
               shadowColor: Colors.transparent,
               minimumSize: minimumSize,
               shape: RoundedRectangleBorder(

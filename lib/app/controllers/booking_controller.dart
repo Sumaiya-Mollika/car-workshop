@@ -25,8 +25,7 @@ class BookingController extends GetxController {
   final selectedMechanic = Rx<UserWithRole?>(null);
   final startDate = Rx<DateTime?>(null);
   final endDate = Rx<DateTime?>(null);
- 
-  
+
   final focusedDay = Rx<DateTime?>(DateTime.now());
   final selectedDay = Rx<DateTime?>(null);
 
@@ -71,7 +70,7 @@ class BookingController extends GetxController {
           .doc(bookingId)
           .set(newBooking.toMap());
       showMessage("Booking created successfully!");
-  fetchBookings();
+      fetchBookings();
     } catch (e) {
       showMessage("Failed to create booking: $e", isError: true);
     }
@@ -95,53 +94,49 @@ class BookingController extends GetxController {
     }
   }
 
-
   void fetchBookings() {
     displayLoading();
 
-     _firestore.collection('bookings').snapshots().listen((snapshot) {
-  var bookings = snapshot.docs.map((doc) {
+    _firestore.collection('bookings').snapshots().listen((snapshot) {
+      var bookings = snapshot.docs.map((doc) {
         return Booking.fromMap(doc.data(), doc.id);
       }).toList();
-       dismissLoading(); 
-      allBookings.value = bookings; 
-      
-       filterBookingsByDate( focusedDay.value!); 
-         Get.to(() => const BookingCalendarScreen());
-  }, onError: (error) {
-   showMessage(error,isError: true); 
-  });
+      dismissLoading();
+      allBookings.value = bookings;
 
+      filterBookingsByDate(focusedDay.value!);
+      Get.to(() => const BookingCalendarScreen());
+    }, onError: (error) {
+      showMessage(error, isError: true);
+    });
   }
 
   void filterBookingsByDate(DateTime selectedDay) {
- filteredBookings.clear();
+    filteredBookings.clear();
     filteredBookings.value = allBookings.where((booking) {
-      return isSameDay(booking.startDateTime, selectedDay);  // Filter by date
+      return isSameDay(booking.startDateTime, selectedDay); // Filter by date
     }).toList();
-
   }
 
-
- List<Booking> getBookingsForDay(DateTime day) {
+  List<Booking> getBookingsForDay(DateTime day) {
     return allBookings.where((booking) {
       return isSameDay(booking.startDateTime, day);
     }).toList();
-    
   }
-
 
   void fetchMechanicBookings(String mechanicId) {
     allBookings.clear();
-    _firestore.collection('bookings')
-      .where('mechanicId', isEqualTo: mechanicId)
-      .snapshots().listen((snapshot) {
-        var bookings = snapshot.docs.map((doc) {
-          return Booking.fromMap(doc.data(), doc.id);
-        }).toList();
-        allBookings.value = bookings;
-         filterBookingsByDate( focusedDay.value!); 
-          Get.to(() => const BookingCalendarScreen());
-      });
+    _firestore
+        .collection('bookings')
+        .where('mechanicId', isEqualTo: mechanicId)
+        .snapshots()
+        .listen((snapshot) {
+      var bookings = snapshot.docs.map((doc) {
+        return Booking.fromMap(doc.data(), doc.id);
+      }).toList();
+      allBookings.value = bookings;
+      filterBookingsByDate(focusedDay.value!);
+      Get.to(() => const BookingCalendarScreen());
+    });
   }
 }

@@ -7,7 +7,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-
 import '../ui/screens/sign_in_screen.dart';
 import '../utils/easyloading_helper.dart';
 
@@ -110,10 +109,9 @@ class AuthController extends GetxController {
 
   void validatePasswords() {
     if (password.value != confirmPassword.value) {
-      passwordErrorMessage.value =
-          'Passwords do not match'; 
+      passwordErrorMessage.value = 'Passwords do not match';
     } else {
-      passwordErrorMessage.value = ''; 
+      passwordErrorMessage.value = '';
     }
   }
 

@@ -29,10 +29,7 @@ class _BookingCalendarScreenState extends State<BookingCalendarScreen>
   void initState() {
     super.initState();
     bookingC.selectedDay.value = bookingC.focusedDay.value;
-
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +57,6 @@ class _BookingCalendarScreenState extends State<BookingCalendarScreen>
           children: [
             Obx(
               () => TableCalendar(
-              
                 focusedDay: bookingC.focusedDay.value!,
                 firstDay: DateTime(2020, 1, 1),
                 lastDay: DateTime(2030, 12, 31),

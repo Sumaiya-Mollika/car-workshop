@@ -1,6 +1,4 @@
-
 import 'package:flutter/material.dart';
-
 
 class ShadowContainerComponent extends StatelessWidget {
   final Widget childWidget;
@@ -13,7 +11,7 @@ class ShadowContainerComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-       padding: const EdgeInsets.all(5),
+      padding: const EdgeInsets.all(5),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),

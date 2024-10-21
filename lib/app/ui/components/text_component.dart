@@ -1,11 +1,8 @@
-
 import 'package:car_care/app/utils/style.dart';
 
 import 'package:flutter/material.dart';
 
-
 import 'package:google_fonts/google_fonts.dart';
-
 
 class TextComponent extends StatelessWidget {
   final String? text;
@@ -25,7 +22,7 @@ class TextComponent extends StatelessWidget {
   final VoidCallback? onPressed;
   final TextDecoration? textDecoration;
   final TextInputType? keyboardType;
-  
+
   const TextComponent(
     this.text, {
     super.key,
@@ -33,7 +30,7 @@ class TextComponent extends StatelessWidget {
     this.maxLines,
     this.opacity = 1,
     this.textOverflow,
-    this.font =primaryFont,
+    this.font = primaryFont,
     this.isTranslatable = true,
     this.isHideKeyboard = true,
     this.color = kTextColor,
@@ -42,10 +39,9 @@ class TextComponent extends StatelessWidget {
     this.lineHeight = kLineHeight,
     this.letterSpacing = kSmallerLetterSpacing,
     this.fontWeight = regularFontWeight,
-    this.padding =  EdgeInsets.zero,
-    this.textDecoration, 
-    this.keyboardType, 
-   
+    this.padding = EdgeInsets.zero,
+    this.textDecoration,
+    this.keyboardType,
   });
 
   @override
@@ -67,21 +63,19 @@ class TextComponent extends StatelessWidget {
     return Padding(
       padding: padding,
       child: Text(
-    text ?? "",
+        text ?? "",
         textAlign: textAlign,
         maxLines: maxLines,
         overflow: textOverflow,
-       
         style: GoogleFonts.getFont(font,
             fontWeight: fontWeight,
             fontSize: fontSize,
             fontStyle: FontStyle.normal,
             height: lineHeight,
-            letterSpacing:letterSpacing, 
+            letterSpacing: letterSpacing,
             color: color.withOpacity(opacity),
             decoration: textDecoration),
       ),
-      
     );
   }
 }

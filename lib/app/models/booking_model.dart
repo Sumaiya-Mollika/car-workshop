@@ -10,7 +10,7 @@ class Booking {
   final String bookingTitle;
   final DateTime startDateTime;
   final DateTime endDateTime;
-  final String mechanicId; 
+  final String mechanicId;
 
   Booking({
     required this.id,
@@ -26,7 +26,6 @@ class Booking {
     required this.endDateTime,
     required this.mechanicId,
   });
-
 
   Map<String, dynamic> toMap() {
     return {
@@ -44,7 +43,6 @@ class Booking {
       'mechanicId': mechanicId,
     };
   }
-
 
   static Booking fromMap(Map<String, dynamic> map, String id) {
     return Booking(

@@ -39,7 +39,7 @@ const kFontRadius = 8.0;
 const kIconColor = Color(0xFF1a82dd);
 const kBackground200Color = Color(0xFFbedcf9);
 const kBackground100Color = Color(0xFFe2eefc);
- const kRedPrimaryColor = Color(0xFFD51F26);
+const kRedPrimaryColor = Color(0xFFD51F26);
 const kPrimaryLightColor = Color(0x1AD93D14);
 const kPreliminaryColor = Color(0xFF0B695E);
 const kTextColor = Color(0xFF113b69);
@@ -47,7 +47,7 @@ const kTextColor = Color(0xFF113b69);
 const kSecondaryTextColor = Color(0xFF1D1F2B);
 const kDisabledTextColor = Color(0xFF485668);
 const kGrayColor = Color(0xFF9E9E9E);
-const hintColor=Color(0xFFBDBDBD);
+const hintColor = Color(0xFFBDBDBD);
 const kErrorColor = Color(0xFFD51F26);
 const kSuccessfulColor = Color(0xFF008216);
 const lightPrimaryColor = Color(0xFF8F94FB);
@@ -70,7 +70,6 @@ const itemSelectedColor = Color(0xFFF0F0F0);
 const kCardBackgroundColor = Color(0x0A091E42);
 const bottomNavBorderColor = Color(0xFFE8E8E8);
 const loaderBackgroundColor = Color(0xFF0e467e);
-
 
 const kFadedSmallTextStyle = TextStyle(
     color: kDisabledTextColor,

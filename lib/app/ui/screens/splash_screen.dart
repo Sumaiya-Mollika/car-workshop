@@ -9,9 +9,8 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-     Future.delayed(const Duration(seconds: 2), () {
-      
-      Get.offAll(()=>SignInScreen()); 
+    Future.delayed(const Duration(seconds: 2), () {
+      Get.offAll(() => SignInScreen());
     });
     return Scaffold(
       body: Container(
@@ -20,15 +19,13 @@ class SplashScreen extends StatelessWidget {
         decoration: buildBackgroundDecoration(),
         child: Stack(
           children: <Widget>[
-            positionedComponent(Get.width *0.08, Get.width *0.21,Get.height* 0.25, Assets.images.light1.path),
-            positionedComponent(Get.width *0.37, Get.width *0.21,Get.height* 0.19, Assets.images.light2.path),
-        
+            positionedComponent(Get.width * 0.08, Get.width * 0.21,
+                Get.height * 0.25, Assets.images.light1.path),
+            positionedComponent(Get.width * 0.37, Get.width * 0.21,
+                Get.height * 0.19, Assets.images.light2.path),
           ],
         ),
       ),
     );
   }
-
-
-
 }
