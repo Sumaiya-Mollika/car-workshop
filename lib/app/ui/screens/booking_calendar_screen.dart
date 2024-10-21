@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:car_care/app/ui/components/button_component.dart';
 import 'package:car_care/app/ui/components/sadow_container_component.dart';
 import 'package:car_care/app/ui/components/text_component.dart';
