@@ -19,7 +19,7 @@ class BookingScreen extends StatelessWidget with Base{
 
   @override
   Widget build(BuildContext context) {
- bookingC.  fetchMechanics(); 
+
     return Scaffold(
       appBar: AppBar(
         

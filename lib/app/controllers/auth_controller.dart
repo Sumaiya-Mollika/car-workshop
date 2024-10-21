@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:car_care/app/controllers/booking_controller.dart';
 import 'package:car_care/app/utils/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -15,22 +18,32 @@ class AuthController extends GetxController {
 
   var emailController = TextEditingController().obs;
   var passwordController = TextEditingController().obs;
-  var confrimpPasswordController = TextEditingController().obs;
+  var confirmpPasswordController = TextEditingController().obs;
 
   // Initialize _user directly here
   final user = Rx<User?>(null);
-  final selectedRole = RxString("mechanic");
+  final selectedRole = RxString("admin");
   final userRole = RxString("");
   final mechanicEmail = RxString("");
   final email = RxString("");
   final password = RxString("");
-  final confrimpPassword = RxString("");
+  final confirmPassword = RxString("");
+  final passwordErrorMessage = RxString("");
   final isDisable = RxBool(false);
 
   getUserRoleById(String? userId) async {
+    final bookingC = Get.put(BookingController());
+    displayLoading();
     DocumentSnapshot userDoc =
         await _firestore.collection('users-with-role').doc(userId).get();
     userRole.value = userDoc['role'];
+    log('Role: ${userRole.value}');
+    if (userRole.value == 'mechanic') {
+      bookingC.fetchMechanicBookings(user.value!.uid);
+    } else {
+      bookingC.fetchBookings();
+    }
+    dismissLoading();
   }
 
   getMechanicById(String? userId) async {
@@ -76,7 +89,7 @@ class AuthController extends GetxController {
       showMessage("Sign In Successful");
       user.value = userCredential.user;
       getUserRoleById(userCredential.user!.uid);
-      Get.offAll(() => const BookingCalendarScreen());
+    // Get.to(() => const BookingCalendarScreen());
     } catch (e) {
       showMessage(e.toString(), isError: true);
     }
@@ -90,17 +103,28 @@ class AuthController extends GetxController {
   }
 
   void clearValues() {
-    email.value="";
-    password.value="";
+    email.value = "";
+    password.value = "";
+    confirmPassword.value = "";
     emailController.value.clear();
     passwordController.value.clear();
-    confrimpPasswordController.value.clear();
+    confirmpPasswordController.value.clear();
+  }
+
+  void validatePasswords() {
+    if (password.value != confirmPassword.value) {
+      passwordErrorMessage.value =
+          'Passwords do not match'; // Set error message
+    } else {
+      passwordErrorMessage.value = ''; // Clear error message if they match
+    }
   }
 
   bool disableButton() {
-    return !(emailController.value.text.isEmail &&
-        passwordController.value.text.isNotEmpty &&
-        confrimpPasswordController.value.text.isNotEmpty &&
+    return !(email.value.isEmail &&
+        password.value.isNotEmpty &&
+        confirmPassword.value.isNotEmpty &&
+        password.value == confirmPassword.value &&
         selectedRole.value.isNotEmpty);
   }
 

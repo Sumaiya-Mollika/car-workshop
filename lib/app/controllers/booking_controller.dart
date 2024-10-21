@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:car_care/app/ui/screens/booking_calendar_screen.dart';
 import 'package:car_care/app/utils/easyloading_helper.dart';
 import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -113,7 +114,7 @@ class BookingController extends GetxController {
       allBookings.value = bookings; 
       
        filterBookingsByDate( focusedDay.value!); 
-      
+         Get.to(() => const BookingCalendarScreen());
   }, onError: (error) {
    showMessage(error,isError: true); 
   });
@@ -121,7 +122,7 @@ class BookingController extends GetxController {
   }
 
   void filterBookingsByDate(DateTime selectedDay) {
- 
+ filteredBookings.clear();
     filteredBookings.value = allBookings.where((booking) {
       return isSameDay(booking.startDateTime, selectedDay);  // Filter by date
     }).toList();
@@ -130,21 +131,28 @@ class BookingController extends GetxController {
 
 
  List<Booking> getBookingsForDay(DateTime day) {
+   log('Selected Day: $day');
+   log('Selected Day: $allBookings');
     return allBookings.where((booking) {
       return isSameDay(booking.startDateTime, day);
     }).toList();
+    
   }
 
 
   void fetchMechanicBookings(String mechanicId) {
+     log('mechanicId: ${mechanicId}');
+    allBookings.clear();
     _firestore.collection('bookings')
       .where('mechanicId', isEqualTo: mechanicId)
       .snapshots().listen((snapshot) {
         var bookings = snapshot.docs.map((doc) {
           return Booking.fromMap(doc.data(), doc.id);
         }).toList();
+           log('all bookings: $bookings');
         allBookings.value = bookings;
          filterBookingsByDate( focusedDay.value!); 
+          Get.to(() => const BookingCalendarScreen());
       });
   }
 }
