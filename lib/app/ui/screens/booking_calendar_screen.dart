@@ -80,7 +80,6 @@ class _BookingCalendarScreenState extends State<BookingCalendarScreen>
                   });
                 },
                 eventLoader: (day) {
-              log(bookingC.getBookingsForDay(day).length.toString());
                   return bookingC.getBookingsForDay(day);
                 },
               ),

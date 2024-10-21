@@ -36,7 +36,6 @@ class AuthController extends GetxController {
     DocumentSnapshot userDoc =
         await _firestore.collection('users-with-role').doc(userId).get();
     userRole.value = userDoc['role'];
-    log('Role: ${userRole.value}');
     if (userRole.value == 'mechanic') {
       bookingC.fetchMechanicBookings(user.value!.uid);
     } else {

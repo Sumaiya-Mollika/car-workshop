@@ -44,8 +44,6 @@ class BookingController extends GetxController {
     }).catchError((error) {
       log('Error fetching mechanics: $error');
     });
-
-    log(mechanics.toJson().toString());
   }
 
   Future<void> createBooking() async {
@@ -126,8 +124,6 @@ class BookingController extends GetxController {
 
 
  List<Booking> getBookingsForDay(DateTime day) {
-   log('Selected Day: $day');
-   log('Selected Day: $allBookings');
     return allBookings.where((booking) {
       return isSameDay(booking.startDateTime, day);
     }).toList();
@@ -136,7 +132,6 @@ class BookingController extends GetxController {
 
 
   void fetchMechanicBookings(String mechanicId) {
-     log('mechanicId: $mechanicId');
     allBookings.clear();
     _firestore.collection('bookings')
       .where('mechanicId', isEqualTo: mechanicId)
@@ -144,7 +139,6 @@ class BookingController extends GetxController {
         var bookings = snapshot.docs.map((doc) {
           return Booking.fromMap(doc.data(), doc.id);
         }).toList();
-           log('all bookings: $bookings');
         allBookings.value = bookings;
          filterBookingsByDate( focusedDay.value!); 
           Get.to(() => const BookingCalendarScreen());
