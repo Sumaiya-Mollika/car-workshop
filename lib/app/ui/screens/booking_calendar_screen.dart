@@ -121,7 +121,7 @@ class _BookingCalendarScreenState extends State<BookingCalendarScreen>
         ),
         persistentFooterButtons: [
           Obx(
-            () => authC.userRole.value == 'admin'
+            () => authC.userRole.value == Roles.admin
                 ? ButtonComponent(
                     padding: const EdgeInsets.symmetric(horizontal: 50),
                     onPressed: () {

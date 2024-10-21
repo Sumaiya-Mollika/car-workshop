@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:car_care/app/ui/screens/booking_calendar_screen.dart';
+import 'package:car_care/app/utils/constants.dart';
 import 'package:car_care/app/utils/easyloading_helper.dart';
 import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -34,7 +35,7 @@ class BookingController extends GetxController {
     selectedMechanic.value = null;
     _firestore
         .collection('users-with-role')
-        .where('role', isEqualTo: 'mechanic')
+        .where('role', isEqualTo: Roles.mechanic)
         .get()
         .then((querySnapshot) {
       mechanics.value = querySnapshot.docs.map((doc) {

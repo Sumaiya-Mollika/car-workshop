@@ -103,7 +103,7 @@ class SignUpScreen extends StatelessWidget with Base {
         children: [
           Radio(
             activeColor: primaryColor,
-            value: 'admin',
+            value: Roles.admin,
             groupValue: authC.selectedRole.value,
             onChanged: (String? value) {
               authC.selectedRole.value = value!;
@@ -113,7 +113,7 @@ class SignUpScreen extends StatelessWidget with Base {
           const SizedBox(width: 20),
           Radio(
             activeColor: primaryColor,
-            value: 'mechanic',
+            value: Roles.mechanic,
             groupValue: authC.selectedRole.value,
             onChanged: (String? value) {
               authC.selectedRole.value = value!;
