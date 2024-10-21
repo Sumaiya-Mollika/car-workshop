@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:car_care/app/ui/screens/booking_calendar_screen.dart';
 import 'package:car_care/app/utils/constants.dart';
-import 'package:car_care/app/utils/easyloading_helper.dart';
+import 'package:car_care/app/utils/utils.dart';
 import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -34,7 +34,7 @@ class BookingController extends GetxController {
     mechanics.clear();
     selectedMechanic.value = null;
     _firestore
-        .collection('users-with-role')
+        .collection(Collections.userWithRole)
         .where('role', isEqualTo: Roles.mechanic)
         .get()
         .then((querySnapshot) {
@@ -49,7 +49,7 @@ class BookingController extends GetxController {
   Future<void> createBooking() async {
     displayLoading();
     try {
-      String bookingId = _firestore.collection('bookings').doc().id;
+      String bookingId = _firestore.collection(Collections.bookings).doc().id;
 
       Booking newBooking = Booking(
         id: bookingId,
@@ -67,7 +67,7 @@ class BookingController extends GetxController {
       );
 
       await _firestore
-          .collection('bookings')
+          .collection(Collections.bookings)
           .doc(bookingId)
           .set(newBooking.toMap());
       showMessage("Booking created successfully!");
@@ -98,7 +98,7 @@ class BookingController extends GetxController {
   void fetchBookings() {
     displayLoading();
 
-    _firestore.collection('bookings').snapshots().listen((snapshot) {
+    _firestore.collection(Collections.bookings).snapshots().listen((snapshot) {
       var bookings = snapshot.docs.map((doc) {
         return Booking.fromMap(doc.data(), doc.id);
       }).toList();
@@ -128,7 +128,7 @@ class BookingController extends GetxController {
   void fetchMechanicBookings(String mechanicId) {
     allBookings.clear();
     _firestore
-        .collection('bookings')
+        .collection(Collections.bookings)
         .where('mechanicId', isEqualTo: mechanicId)
         .snapshots()
         .listen((snapshot) {

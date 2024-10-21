@@ -4,6 +4,7 @@ import 'package:car_care/app/ui/components/text_component.dart';
 import 'package:car_care/config/base.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import '../../models/booking_model.dart';
 import '../../utils/style.dart';
 import '../../utils/utils.dart';

@@ -35,7 +35,6 @@ class DatePickerComponent extends StatelessWidget {
                     ? hintText
                     : selectedDate.value!.toLocal().toString().split(' ')[0],
                 border: InputBorder.none,
-                //border: const OutlineInputBorder(),
                 contentPadding: const EdgeInsets.all(10),
                 suffixIcon: const Icon(
                   Icons.calendar_month,

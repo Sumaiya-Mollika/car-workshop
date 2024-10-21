@@ -1,7 +1,5 @@
 import 'package:car_care/app/utils/style.dart';
-
 import 'package:flutter/material.dart';
-
 import 'package:google_fonts/google_fonts.dart';
 
 class TextComponent extends StatelessWidget {

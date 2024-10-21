@@ -1,12 +1,12 @@
 import 'package:car_care/app/controllers/booking_controller.dart';
 import 'package:car_care/app/utils/constants.dart';
+import 'package:car_care/app/utils/utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../ui/screens/sign_in_screen.dart';
-import '../utils/easyloading_helper.dart';
 
 class AuthController extends GetxController {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -31,7 +31,7 @@ class AuthController extends GetxController {
     final bookingC = Get.put(BookingController());
     displayLoading();
     DocumentSnapshot userDoc =
-        await _firestore.collection('users-with-role').doc(userId).get();
+        await _firestore.collection(Collections.userWithRole).doc(userId).get();
     userRole.value = userDoc['role'];
     if (userRole.value == Roles.mechanic) {
       bookingC.fetchMechanicBookings(user.value!.uid);
@@ -44,7 +44,7 @@ class AuthController extends GetxController {
   getMechanicById(String? userId) async {
     displayLoading();
     DocumentSnapshot userDoc =
-        await _firestore.collection('users-with-role').doc(userId).get();
+        await _firestore.collection(Collections.userWithRole).doc(userId).get();
 
     mechanicEmail.value = userDoc['email'];
     dismissLoading();
@@ -60,7 +60,7 @@ class AuthController extends GetxController {
       );
 
       await _firestore
-          .collection('users-with-role')
+          .collection(Collections.userWithRole)
           .doc(userCredential.user!.uid)
           .set({
         'email': emailController.value.text,

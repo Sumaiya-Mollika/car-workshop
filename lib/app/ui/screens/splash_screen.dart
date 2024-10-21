@@ -2,6 +2,7 @@ import 'package:car_care/app/ui/components/auth_background_component.dart';
 import 'package:car_care/app/ui/screens/sign_in_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import '../../../gen/assets.gen.dart';
 
 class SplashScreen extends StatelessWidget {

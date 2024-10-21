@@ -10,3 +10,9 @@ class Roles {
   static const String admin = 'admin';
   static const String mechanic = 'mechanic';
 }
+
+// Roles constant
+class Collections {
+  static const String userWithRole = 'users-with-role';
+  static const String bookings = 'bookings';
+}

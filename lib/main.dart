@@ -1,8 +1,8 @@
 import 'dart:developer';
 
 import 'package:car_care/app/controllers/auth_controller.dart';
-import 'package:car_care/app/utils/easyloading_helper.dart';
 import 'package:car_care/app/utils/style.dart';
+import 'package:car_care/app/utils/utils.dart';
 import 'package:car_care/config/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';

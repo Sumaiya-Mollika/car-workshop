@@ -63,13 +63,6 @@ class ButtonComponent extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(kFontRadius),
-            // boxShadow: [
-            //   BoxShadow(
-            //     color: Color(0x29000000),
-            //     blurRadius: 3,
-            //     offset: Offset(3, 3),
-            //   ),
-            // ],
             gradient: cancelButton == false
                 ? LinearGradient(
                     begin: Alignment.centerRight,
