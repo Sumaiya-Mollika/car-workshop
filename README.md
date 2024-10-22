@@ -94,9 +94,6 @@ To set up and run this project on a new machine, follow these steps:
      ```bash
      flutter pub get
      ```
-
-5. **Configure Firebase**:
-   - Download and place the `google-services.json` for Android and `GoogleService-Info.plist` for iOS in their respective directories.
    
-6. **Run the Project**:
+5. **Run the Project**:
    - Use the `flutter run` command to run the project on an emulator or physical device.
