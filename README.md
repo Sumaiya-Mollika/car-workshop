@@ -1,5 +1,3 @@
-### `README.md` for **CarWorkshop** Project
-
 # CarWorkshop - A Car Workshop Management App
 
 CarWorkshop is a cross-platform mobile app built with Flutter that helps manage car service bookings for a workshop. The app includes user authentication, role-based access (admin/mechanic), and a calendar view for tracking car service bookings. Admins can create and manage bookings, while mechanics can view jobs assigned to them.
