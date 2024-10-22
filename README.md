@@ -18,13 +18,14 @@ CarWorkshop is a cross-platform mobile app built with Flutter that helps manage 
 - **Firestore**: For storing and retrieving service booking data.
 - **table_calendar**: For displaying bookings in a calendar view.
 - **google_fonts**: For custom fonts.
+- **flutter_launcher_icons**: For custom icon.
 
 ## Setup Instructions
 
 ### Prerequisites
 Before setting up the project on a new machine, ensure the following are installed:
 
-1. **Flutter SDK**: Version 3.24.1 or higher.
+1. **Flutter SDK**: Version 3.24.1 or higher. 
    - [Install Flutter](https://flutter.dev/docs/get-started/install).
 2. **Dart SDK**: This will be installed with Flutter.
 3. **Android Studio / Xcode**: To run the app on Android or iOS.
