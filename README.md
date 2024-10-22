@@ -22,14 +22,19 @@ CarWorkshop is a cross-platform mobile app built with Flutter that helps manage 
 ## Setup Instructions
 
 ### Prerequisites
-- **Flutter SDK**: Version 3.5.1 or higher.
-- **Firebase Project**: You need a Firebase project to configure authentication and Firestore.
+Before setting up the project on a new machine, ensure the following are installed:
+
+1. **Flutter SDK**: Version 3.24.1 or higher.
+   - [Install Flutter](https://flutter.dev/docs/get-started/install).
+2. **Dart SDK**: This will be installed with Flutter.
+3. **Android Studio / Xcode**: To run the app on Android or iOS.
+4. **Firebase Account**: You need a Firebase project to configure authentication and Firestore.
 
 ### 1. Clone the Repository
 Clone the project repository to your local machine:
 
 ```bash
-git https://github.com/Sumaiya-Mollika/car-workshop.git
+git clone https://github.com/Sumaiya-Mollika/car-workshop.git
 cd car-workshop
 ```
 
@@ -40,45 +45,58 @@ Run the following command to install all the dependencies specified in `pubspec.
 flutter pub get
 ```
 
-### 3. Firebase Configuration
-
-1. **Firebase Setup**:
-   - Go to [Firebase Console](https://console.firebase.google.com/).
-   - Create a new Firebase project.
-   - Enable **Firebase Authentication** (Email/Password).
-   - Enable **Cloud Firestore** for the project.
-
-2. **Add Firebase Configuration to Flutter**:
-   - Download `google-services.json` for Android and `GoogleService-Info.plist` for iOS from Firebase.
-   - Place the files in the following locations:
-     - `android/app/google-services.json`
-     - `ios/Runner/GoogleService-Info.plist`
-
-3. **Update Firebase Core Initialization**:
-   - Ensure Firebase is properly initialized in your app by adding the following in `main.dart`:
-
-   ```dart
-   void main() async {
-     WidgetsFlutterBinding.ensureInitialized();
-     await Firebase.initializeApp();
-     runApp(MyApp());
-   }
+### 3. Set Up for Android
+1. **Install Android Studio**: Ensure you have Android Studio set up.
+2. **Configure the Android SDK**: Make sure that the Android SDK is properly installed and available in your system's PATH.
+3. **Connect Android Emulator or Device**:
+   - If using an emulator, ensure the emulator is running.
+   - If using a physical device, enable USB debugging.
+4. **Run the App on Android**:
+   ```bash
+   flutter run
    ```
 
-### 4. Build and Run the App
+### 4. Set Up for iOS
+1. **Install Xcode**: Ensure you have Xcode installed for iOS development (macOS required).
+2. **Configure Signing in Xcode**:
+   - Open the project in Xcode (`ios/Runner.xcworkspace`).
+   - Set up your development team and signing certificates under the "Signing & Capabilities" tab.
+3. **Run the App on iOS**:
+   ```bash
+   flutter run
+   ```
 
-To run the app on your device or emulator:
+### 5. Running on a New Machine
+To set up and run this project on a new machine, follow these steps:
 
-```bash
-flutter run
-```
+1. **Install Flutter and Dart**:
+   - Visit [Flutter Installation Guide](https://flutter.dev/docs/get-started/install) to set up Flutter on your operating system.
+   - Verify installation by running `flutter doctor` and resolve any issues.
 
-For Android:
-```bash
-flutter build apk
-```
+2. **Install Xcode (macOS)**:
+   - Install **Xcode** from the App Store for iOS development.
+   - Run `sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer/` to set the Xcode path.
 
-For iOS (macOS required):
-```bash
-flutter build ios
-```
+3. **Install Android Studio**:
+   - Download and install Android Studio for Android development.
+   - Set up the **Android SDK** by opening Android Studio and following the setup wizard.
+
+4. **Clone the Project and Install Dependencies**:
+   - Clone the project repository:
+   
+     ```bash
+     git clone https://github.com/Sumaiya-Mollika/car-workshop.git
+     cd car-workshop
+     ```
+   
+   - Install the necessary Flutter dependencies:
+   
+     ```bash
+     flutter pub get
+     ```
+
+5. **Configure Firebase**:
+   - Download and place the `google-services.json` for Android and `GoogleService-Info.plist` for iOS in their respective directories.
+   
+6. **Run the Project**:
+   - Use the `flutter run` command to run the project on an emulator or physical device.
